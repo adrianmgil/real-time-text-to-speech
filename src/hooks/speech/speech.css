@@ -1,0 +1,11 @@
+.text-highlight {
+  margin:0;
+  padding: 0;
+  background-color: var(--colorHighlight, #FFFFB0);
+  display: contents;
+}
+
+.color-theme-dark .text-highlight {
+  background-color: transparent;
+  color: var(--colorHighlight, #FFFFB0);
+}

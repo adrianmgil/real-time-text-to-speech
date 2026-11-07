@@ -1,0 +1,27 @@
+.resizable-line {
+  height: 5px;
+  margin: 0rem 0.5rem;
+  position: relative;
+  border-bottom-width: 1px; 
+}
+.resizable-line:hover {
+  background-color: var(--colorText, --colorTextDefault);
+}
+
+.resizable-line > div::after {
+  position: absolute;
+  content: '';
+}
+
+.resizable-line > div {
+  position: absolute;
+  top: -12px;
+  height: 30px;
+  width: 100%;
+  z-index: 1;
+}
+.resizable-line > div:hover {
+  cursor: ns-resize;
+  position: relative;
+}
+

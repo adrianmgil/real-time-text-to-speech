@@ -1,0 +1,52 @@
+.content-editor-contrainer {
+    position: relative;
+    min-height: 100px;
+    flex-grow: 1;
+    background-color: transparent;
+    display: block;
+    width: stretch;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    border-width: 0.2rem;
+    border-style: solid;
+    white-space: pre-wrap;
+    font-size: var(--fontSize, '18px');
+}
+.buttonClear {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    scale: 0.8;
+}
+
+.content-editor-contrainer div[contenteditable] {
+    height: 100%;
+    border: none;
+    outline: none;
+    overflow: auto;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--colorText, --colorTextDefault);
+  border-radius: 10px;
+  border-width: 0px;
+}
+
+.content-editor-contrainer:focus-within {
+    outline: solid 2px var(--colorText, --colorTextDefault);;
+}
+
+.color-theme-dark .content-editor-contrainer {
+  border-color: var(--colorText, --colorTextDefault);
+  color:white;
+}
+.color-theme-light .content-editor-contrainer {
+  border-color: lightgray;
+  color:black;
+}
