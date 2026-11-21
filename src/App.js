@@ -4,7 +4,7 @@ import { useTextToSpeech } from './hooks/speech/TextToSpeech';
 import { useTextToListen } from './hooks/speech/TextToListen';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useKeyboardHeight } from 'react-simplikit';
-import { useLocalStorage } from './components/settings/settings.hook';
+import { setDefaultLocalStorage, useLocalStorage } from './components/settings/settings.hook';
 import { useGestures } from './hooks/gestures.hook';
 import { useWindowResize } from './hooks/windowresize.hook';
 import { SettingEnum } from './enum/SwttingEnum';
@@ -21,13 +21,22 @@ function App() {
   const searchParams = new URLSearchParams(window.location.search);
   const isDebugMode = searchParams.has('debug');
   
+  setDefaultLocalStorage(
+  {
+      [SettingEnum.DARK_THEME]: true,
+      [SettingEnum.COLOR_HIGHLIGHT]: '#FFFFB0',
+      [SettingEnum.COLOR_TEXT]: '#259c65',
+      [SettingEnum.FONT_SIZE]: 18,
+      [SettingEnum.SHOW_SPEAKING]: true,
+      [SettingEnum.SHOW_LISTEN]: true,
+  });
   const isDarkTheme = localStorage.getItem(SettingEnum.DARK_THEME);
   const colorHighlight = (localStorage.getItem(SettingEnum.COLOR_HIGHLIGHT) ?? '').replace(/"/g,'');
   const colorText = (localStorage.getItem(SettingEnum.COLOR_TEXT) ?? '').replace(/"/g,'');
   const fontSize = localStorage.getItem(SettingEnum.FONT_SIZE);
   const showSpeaking = localStorage.getItem(SettingEnum.SHOW_SPEAKING) === 'true';
-  const showListen = localStorage.getItem(SettingEnum.SHOW_LISTEN) === 'true';
-  const initListen = localStorage.getItem(SettingEnum.INIT_LISTEN) === 'true' && showListen;
+  const showListen = localStorage.getItem(SettingEnum.SHOW_LISTEN)  === 'true';
+  const initListen = (localStorage.getItem(SettingEnum.INIT_LISTEN) === 'true') && showListen;
   const [,setFontSize] = useLocalStorage(SettingEnum.FONT_SIZE);
 
   const fullScreenHandle = useFullScreenHandle();
@@ -45,7 +54,7 @@ function App() {
     '--windowWidth': win.innerWidth +'px',
     '--colorHighlight': colorHighlight,
     '--colorText': colorText,
-    '--colorTextDefault': '#5bb189',
+    '--colorTextDefault': '#259c65',
     '--fontSize': (fontSize ?? 18) + 'px',
     'touchAction': 'none',
   };
@@ -73,7 +82,7 @@ function App() {
             />
             <ResizableLine onResize={handleReize}/>            
           </>}
-          {startSpeaking && <>
+          {(!showListen || startSpeaking) && <>
             <ContentEditor
               className='textSpeak'
               html={textToSpeak}
@@ -91,7 +100,7 @@ function App() {
           <SettingsButton onClick={() => setSettingsDisplay(!isSettingsDisplay)} />
           {isSettingsDisplay && <Settings onChange={onSettingsChange} onClose={() => setSettingsDisplay(false)}/>}
           {showListen &&<ListeningButton listening={listening} onStopListen={onStopListen} onStartListen={onStartListen} />}
-          <SpeakingButton speaking={startSpeaking} onStartSpeaking={()=>setStartSpeaking(true)} onStopSpeaking={()=>setStartSpeaking(false)} />
+          {showListen && <SpeakingButton speaking={startSpeaking} onStartSpeaking={()=>setStartSpeaking(true)} onStopSpeaking={()=>setStartSpeaking(false)} />}
           <FullScreenButton handle={fullScreenHandle} />
         </div>
       </FullScreen>

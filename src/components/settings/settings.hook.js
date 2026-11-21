@@ -1,5 +1,14 @@
 import { useState, useEffect } from 'react';
 
+export function setDefaultLocalStorage(settings) {
+    Object.keys(settings).forEach((key) => {
+        const result = localStorage.getItem(key);
+        if (result === null) {
+            localStorage.setItem(key, JSON.stringify(settings[key]));
+        }
+    });
+};
+
 export function useLocalStorage(key, initialValue = '') {
     const [value, setValue] = useState(() => {
 

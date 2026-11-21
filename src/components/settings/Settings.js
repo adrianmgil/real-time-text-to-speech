@@ -19,7 +19,7 @@ function Settings({ onClose, onChange }) {
   const marksFontSize = {}; for (let i = fontSizeMin; i <= fontSizeMax; i+=fontSizeInterval) { marksFontSize[`${i}`] = { label:`${i}`}; }
 
   const { voices } = useSpeechSynthesis();
-  const [ darkTheme, setDarkTheme ] = useLocalStorage(SettingEnum.DARK_THEME, false);
+  const [ darkTheme, setDarkTheme ] = useLocalStorage(SettingEnum.DARK_THEME, true);
   const [ speakDelay, setSpeakDelay ] = useLocalStorage(SettingEnum.SPEAK_DELAY, Math.round((maxDelaySpeak - minDelaySpeak)/2));
   const [ colorHighlight, setColorHighlight ] = useLocalStorage(SettingEnum.COLOR_HIGHLIGHT, '#FFFFB0');
   const [ colorText, setColorText ] = useLocalStorage(SettingEnum.COLOR_TEXT, '#00FF88');
@@ -59,9 +59,9 @@ function Settings({ onClose, onChange }) {
     <div className='settings'>
       <div>
         {SwitchField('Theme', <Switch defaultValue={darkTheme} onChange={setDarkTheme} />, 'Light', 'Dark')}
-        {SwitchField('Speaking', <Switch defaultValue={showSpeaking} onChange={setShowSpeaking} />, 'Hide', 'Show')}
         {SwitchField('Listening', <Switch defaultValue={showListen} onChange={setShowListen} />, 'Hide', 'Show')}
         {SwitchField('Initial Listening', <Switch defaultValue={InitListen} onChange={setInitListen} />, 'Disabled', 'Enabled')}
+        {SwitchField('Initial Speaking', <Switch defaultValue={showSpeaking} onChange={setShowSpeaking} />, 'Disabled', 'Enabled')}
         {Field(<Slider min={minDelaySpeak} max={maxDelaySpeak} marks={marksSpeakDelay} included={false} defaultValue={speakDelay} onChange={setSpeakDelay} />, 'Speak Delay (sec)')}
         {Field(SelectVoice(), 'Voice')}
         {Field(<ColorPicker value={colorHighlight} onChange={(c) => setColorHighlight(c.toHexString())}/>, 'Highlight Color')}

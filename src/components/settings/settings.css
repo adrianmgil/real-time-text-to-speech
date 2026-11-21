@@ -103,7 +103,9 @@
     width: 70%;
     justify-content: flex-end;
 }
-
+.settings .ant-color-picker-color-block {
+    width: 100%;
+}
 .color-theme-dark .settings-select,.color-theme-dark .settings-select option {
     background-color: #000000;
     color: #ffffff;
