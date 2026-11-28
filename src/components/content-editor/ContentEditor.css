@@ -1,6 +1,6 @@
 .content-editor-contrainer {
     position: relative;
-    min-height: 100px;
+    min-height: 40px;
     flex-grow: 1;
     background-color: transparent;
     display: block;
